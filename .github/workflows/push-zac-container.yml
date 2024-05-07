@@ -1,4 +1,4 @@
-name: Deploy Quickstart Container
+name: Deploy Node ZAC Container
 
 on:
   workflow_dispatch:
