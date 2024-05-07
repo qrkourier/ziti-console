@@ -19,4 +19,5 @@ docker buildx create --use --name=zac
 docker buildx build --platform linux/amd64,linux/arm64 . \
   --tag "openziti/zac:${ZAC_VERSION}" \
   --tag "openziti/zac:latest" \
+  --file docker-images/zac/Dockerfile \
   --push
