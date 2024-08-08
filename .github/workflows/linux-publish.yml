@@ -64,7 +64,9 @@ jobs:
           path: ./dist/app-ziti-console/
 
   publish-linux-packages:
-    needs: build-and-upload-app-ziti-console
+    needs:
+      - parse-version
+      - build-and-upload-app-ziti-console
     name: ${{ matrix.package_name }} ${{ matrix.arch.rpm }} ${{ matrix.nfpm_packager }}
     runs-on: ubuntu-latest
     strategy:
