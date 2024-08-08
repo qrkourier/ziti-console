@@ -3,7 +3,7 @@
 # check https://nfpm.goreleaser.com/configuration for detailed usage
 #
 name: openziti-console
-arch: all
+arch: ${GOARCH}
 platform: linux
 version: ${ZAC_VERSION}
 maintainer: ${ZITI_MAINTAINER}
