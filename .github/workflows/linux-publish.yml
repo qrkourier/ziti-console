@@ -8,14 +8,14 @@ on:
       - 'app-ziti-console-v*.*.*'
 
 jobs:
-  zac-version:
+  parse-version:
     name: Find Console Version
     runs-on: ubuntu-latest
     outputs:
-      zac-version: ${{ steps.find.outputs.version }}
+      version: ${{ steps.parse.outputs.version }}
     steps:
       - name: Derive version from tag or package
-        id: find
+        id: parse
         shell: bash
         env:
           GITHUB_REF_NAME: ${{ github.ref_name }}
@@ -33,7 +33,7 @@ jobs:
           fi
 
   build-and-upload-app-ziti-console:
-    needs: zac-version
+    needs: parse-version
     name: Build Console ZIP
     runs-on: ubuntu-latest
     env:
@@ -79,7 +79,7 @@ jobs:
           - deb
           # - archlinux #  (pacman)
     env:
-      ZAC_VERSION: ${{ needs.zac-version.outputs.zac-version }}
+      ZAC_VERSION: ${{ needs.parse-version.outputs.version }}
       ZITI_MAINTAINER: "OpenZiti Maintainers <developers@openziti.org>"
       ZITI_HOMEPAGE: "https://openziti.io"
       ZITI_VENDOR: "NetFoundry"
@@ -155,7 +155,7 @@ jobs:
           jf rt copy
           --recursive=false
           --flat=true
-          ${{ env.ZITI_DEB_TEST_REPO }}/pool/${{ matrix.package_name }}/${{ matrix.arch.deb }}/${{ matrix.package_name }}_${{ needs.parse_version.outputs.version }}_*.deb
+          ${{ env.ZITI_DEB_TEST_REPO }}/pool/${{ matrix.package_name }}/${{ matrix.arch.deb }}/${{ matrix.package_name }}_${{ needs.parse-version.outputs.version }}_*.deb
           ${{ env.ZITI_DEB_PROD_REPO }}/pool/${{ matrix.package_name }}/${{ matrix.arch.deb }}/
 
       - name: Copy RPM from test repo to stable repo with jFrog CLI
@@ -165,5 +165,5 @@ jobs:
           jf rt copy
           --recursive=false
           --flat=true
-          ${{ env.ZITI_RPM_TEST_REPO }}/redhat/${{ matrix.arch.rpm }}/${{ matrix.package_name }}-${{ needs.parse_version.outputs.version }}.${{ matrix.arch.rpm }}.rpm
+          ${{ env.ZITI_RPM_TEST_REPO }}/redhat/${{ matrix.arch.rpm }}/${{ matrix.package_name }}-${{ needs.parse-version.outputs.version }}.${{ matrix.arch.rpm }}.rpm
           ${{ env.ZITI_RPM_PROD_REPO }}/redhat/${{ matrix.arch.rpm }}/
