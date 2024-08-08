@@ -1,0 +1,17 @@
+# nfpm configuration file
+#
+# check https://nfpm.goreleaser.com/configuration for detailed usage
+#
+name: openziti-console-assets
+arch: ${GOARCH}
+platform: linux
+version: ${ZAC_VERSION}
+prerelease: ${ZAC_REV}
+maintainer: ${ZITI_MAINTAINER}
+description: Web console static files for OpenZiti Controller
+vendor: ${ZITI_VENDOR}
+homepage: ${ZITI_HOMEPAGE}
+license: Apache-2.0
+contents:
+  - dst: /var/lib/private/ziti-controller/console
+    src: ./dist/app-ziti-console
