@@ -1,10 +1,11 @@
 {
   "name": "io.netfoundry.zac",
-  "version": "3.6.2",
+  "version": "3.6.3",
   "description": "Ziti Administration Console",
   "main": "server.js",
   "type": "module",
   "scripts": {
+    "preinstall": "ng build ziti-console-lib",
     "clean": "rm -rf node_modules;",
     "zitified": "ZITI_IDENTITY_FILE=zac-identity.json ZITI_SERVICE_NAME=test-service node server.js",
     "ng": "ng",
@@ -52,6 +53,7 @@
     "@openziti/ziti-sdk-nodejs": "^0.13.3"
   },
   "dependencies": {
+    "ziti-console-lib": "file:dist/ziti-console-lib",
     "@angular/animations": "^16.0.0",
     "@angular/cdk": "^16.1.5",
     "@angular/common": "^16.0.0",
@@ -101,7 +103,6 @@
     "vanilla-jsoneditor": "^0.23.4",
     "ws": "^8.12.0",
     "z-schema": "^6.0.1",
-    "ziti-console-lib": "file:dist/ziti-console-lib",
     "zone.js": "~0.13.0",
     "d3": "~7.9.0",
     "d3-hierarchy": "^2.0.0"
